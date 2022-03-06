@@ -26,11 +26,13 @@
       <el-row>
         <el-col :span="8">
           <el-button size="large" :icon="Share"  @click="handlePularClick" type="primary">
-            Pular
+            <i class="fa fa-circle-xmark"></i>
           </el-button>
         </el-col>
         <el-col :offset="9" :span="6">
-          <el-button size="large" type="success">Confirmar</el-button>
+          <el-button size="large" type="success">
+            <i class="fa fa-circle-check"></i>
+          </el-button>
         </el-col>
       </el-row>
     </el-card>
