@@ -1,8 +1,8 @@
 <template>
   <el-container>
     <el-header>
-
     </el-header>
+
     <el-main>
       <RouterView />
     </el-main>
