@@ -15,6 +15,8 @@ const router = createRouter({
       name: 'jogadores',
       component: Players
     }
+    //TODO: Criar view de criar times dinâmicamente
+    //TODO: Criar view de listar jogadores
   ]
 })
 

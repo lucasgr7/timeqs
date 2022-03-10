@@ -1,5 +1,6 @@
-export default {
-    REMOTE_DB: 'remote_base',
-    LOCAL_DB: 'local_db'
+export const SYSTEM = {
+    REMOTE_DB: 'externalDb',
+    LOCAL_DB: 'localDb',
+    HASH: 'hash'
   }
   

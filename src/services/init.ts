@@ -1,5 +1,8 @@
 export default (timeName: string, db: any) => {
   if (db.hasOwnProperty(timeName)) { return db }
+
+  if(timeName !== 'voleifranca') return db;
+
   const database = {} as any
   database[timeName] = {
     jogadores: [

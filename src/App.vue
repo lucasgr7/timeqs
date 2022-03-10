@@ -1,8 +1,24 @@
 <template>
   <el-container>
-    <el-header>
-    </el-header>
-
+     
+      <el-menu
+        default-active="1"
+        class="el-menu-vertical-demo"
+        :collapse="isCollapse"
+        @open="handleOpen"
+        @close="handleClose"
+      >
+        <el-menu-item index="1">
+        <el-icon>
+          <i class='fa fa-flag'></i>
+        </el-icon>
+          <span>Pontuar Jogadores</span>
+        </el-menu-item>
+        <el-menu-item index="2">
+        <el-icon><i class="fa fa-question-circle"></i></el-icon>
+          <span>Montar times</span>
+        </el-menu-item>
+      </el-menu>
     <el-main>
       <RouterView />
     </el-main>
@@ -10,12 +26,21 @@
 </template>
 
 <script lang="ts">
+import { store } from './stores'
+import {handleStorageMutation} from './services/storage'
 
 export default {
   name: 'timeqs',
+  store,
+  data() {
+    return {
+      isCollapse: false
+    }
+  },
   methods: {
   },
   mounted() {
+    store().$subscribe(handleStorageMutation, {deep: true})
   }
 }
 </script>

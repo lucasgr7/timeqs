@@ -7,8 +7,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
-          <img crossorigin="anonymous" src="https://web.whatsapp.com/pp?e=https%3A%2F%2Fpps.whatsapp.net%2Fv%2Ft61.24694-24%2F258689832_483788816809845_3017481807239871222_n.jpg%3Fccb%3D11-4%26oh%3D4b03421dce221c05d20145b03bd0cbbd%26oe%3D6223AC7C&t=l&u=5516991155146%40c.us&i=1645754983&n=jEWlil8jwh9NnnOBSS12olkm2kGxP44frG5%2BUHhF%2BW0%3D" alt="" class="_2hH_e i0jNr" style="visibility: visible;">
+        <el-col :span="24">          
           <el-image
             :src="player.foto"
             :fit="contain"
@@ -21,7 +20,7 @@
           </el-image>
         </el-col>
       </el-row>
-      <el-slider :min="1" :max="10" v-model="points"></el-slider>
+      <el-slider :size="large" :min="1" :max="10" v-model="points"></el-slider>
     <el-divider></el-divider>
       <el-row>
         <el-col :span="8">
@@ -30,7 +29,7 @@
           </el-button>
         </el-col>
         <el-col :offset="9" :span="6">
-          <el-button size="large" type="success">
+          <el-button @click="(event) => handleSetUserScore(player, id)" size="large" type="success">
             <i class="fa fa-circle-check"></i>
           </el-button>
         </el-col>
@@ -39,7 +38,7 @@
   </el-row>
 </template>
 
-<script>
+<script lang="ts">
 import {  mapActions, mapState } from 'pinia'
 import { store } from '@/stores'
 export default {
@@ -55,10 +54,16 @@ export default {
       ...mapState(store, ['getEditPlayers'])
     },
     methods: {
-      ...mapActions(store, ['init']),
+      ...mapActions(store, ['init', 'setUserScore']),
       handlePularClick: function(){
+        this.points = 0
         this.idxVisible++
+      },
+      handleSetUserScore: function(player: any, idx: number){
+        this.setUserScore(idx, this.points)
+        this.handlePularClick()
       }
+      //TODO: Direcionar página de parabenização por conclusão
     },
     mounted(){
       this.init(this.$route.params.timeName)
