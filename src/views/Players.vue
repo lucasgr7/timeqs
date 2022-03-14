@@ -29,7 +29,7 @@
                 <i class="fa fa-circle-xmark"></i>
               </el-button>
             </el-col>
-            <el-col :offset="9" :span="6">
+            <el-col :offset="12" :span="4">
               <el-button @click="(event) => handleSetUserScore(player, id)" size="large" type="success">
                 <i class="fa fa-circle-check"></i>
               </el-button>
