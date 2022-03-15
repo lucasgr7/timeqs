@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 import INIT_STRUCTURE from '@/services/init'
 import { ERRORS } from '@/constants/errors'
 import { SYSTEM } from '@/constants'
 import { handleStorageInitiatilization, fetch } from '@/services/storage'
 import { getRandomString } from '@/services/hash-generator'
+import { syncDatabase } from '@/services/syncronizer'
 
-const URL_REMOTE_DB = 'https://api.jsonstorage.net/v1/json/bfe126d4-2c26-4094-a36c-fd18ce3c8ca2/6e4f117c-e763-426a-bf50-2ca0883903a4'
+const URL_REMOTE_DB = import.meta.env.VITE_URL_STORAGE
 
 const toJS = (data: any): any => {
   return JSON.parse(data)
@@ -82,7 +83,7 @@ export const store = defineStore({
             if(pontuation.hash == this.hash){
               pontuation.score = score;
               found = true,
-              pontuation.changeAt = new Date().toJSON()
+              pontuation.changeAt = new Date().toLocaleString('pt-BR')
               return
             }
           })
@@ -91,7 +92,7 @@ export const store = defineStore({
           playerScores.push({
             hash: this.hash,
             score,
-            changeAt: new Date().toJSON()
+            changeAt: new Date().toLocaleString('pt-BR')
           })
         }
         state.localDb[this.timeName].jogadores[playerIndex].scores = playerScores
@@ -99,14 +100,20 @@ export const store = defineStore({
     },
     async sync() {
       const timeName = this.timeName ?? ''
+
+      // download latest version
       await this.fetchRemoteDb(timeName);
 
-      //TODO: loop my changes
+      // sync with local changes
+      const remoteDb = syncDatabase(this.$state.externalDb, this.$state.localDb, this.$state.hash, this.timeName);
 
-
-      //TODO: send changes
-
-      //TODO: check if persists
+      // stores remotelly
+      const config = {
+        headers: {
+          'content-type': 'application/json'
+        }
+      } as AxiosRequestConfig<any>
+      await axios.put(`${URL_REMOTE_DB}/?apiKey=${import.meta.env.VITE_API_KEY}`, remoteDb, config)
 
     }
   }
