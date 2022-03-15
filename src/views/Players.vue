@@ -131,21 +131,24 @@ export default {
   vertical-align: middle;
 }
 
-.fade-enter-active {
-  animation: bounce-in 0.9s;
-}
+/* 1. declare transition */
+.fade-move,
+.fade-enter-active,
 .fade-leave-active {
-  animation: bounce-in 0.9s reverse;
+  opacity: 0.3;
+  transform: translate(00px, 90px);
 }
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(150px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.fade-leave-active {
+  position: absolute;
 }
 </style>
