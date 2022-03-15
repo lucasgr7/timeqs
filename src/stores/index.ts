@@ -31,16 +31,14 @@ export const store = defineStore({
           return x
         }
       })
+      //TODO: Filtrar fora usuários que não tenha passado 7 dias após storage aplicação
     }
   },
   actions: {
     async init(timeName: string) {
       if(timeName == null) return;
       this.timeName = timeName;
-      const response = await axios.get(URL_REMOTE_DB)
-      this.$patch({
-        externalDb: INIT_STRUCTURE(timeName, response.data)
-      })
+      await this.fetchRemoteDb(timeName);
 
       // hash initialization
       this.createLocalHash()
@@ -51,6 +49,12 @@ export const store = defineStore({
       })
 
       this.jogadores = this.localDb[timeName].jogadores;
+    },
+    async fetchRemoteDb(timeName: string){
+      const response = await axios.get(URL_REMOTE_DB)
+      this.$patch({
+        externalDb: INIT_STRUCTURE(timeName, response.data)
+      });
     },
     createLocalHash(){
       // if i don't have local Hash, create
@@ -93,8 +97,17 @@ export const store = defineStore({
         state.localDb[this.timeName].jogadores[playerIndex].scores = playerScores
       })
     },
-    sync() {
-      // TODO: Criar método de sincronização com json remoto
+    async sync() {
+      const timeName = this.timeName ?? ''
+      await this.fetchRemoteDb(timeName);
+
+      //TODO: loop my changes
+
+
+      //TODO: send changes
+
+      //TODO: check if persists
+
     }
   }
 });
