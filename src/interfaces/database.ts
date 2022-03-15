@@ -12,6 +12,5 @@ export interface JOGADOR {
 export interface SCORE {
     score: number | null,
     changeAt: string,
-    foto: string,
     hash: string
 }

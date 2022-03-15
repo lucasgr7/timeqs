@@ -3,7 +3,7 @@ import { ERRORS } from "@/constants/errors";
 
 const storage = window.localStorage
 
-const toJson = (data: any): string => {
+export const toJson = (data: any): string => {
   return JSON.stringify(data)
 }
 const toJS = (data: any): any => {
@@ -39,5 +39,5 @@ export const handleStorageInitiatilization = (externalDb: any): any => {
 }
 
 export const fetch = (key: string): any => {
-  return storage.getItem(key);
+  return storage.getItem(key)?.replaceAll('\"','');
 }

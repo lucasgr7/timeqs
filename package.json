@@ -2,20 +2,22 @@
   "name": "timeqs",
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "mpvue": "vue-cli-service test",
+    "preview": "vite preview --port 5050",
+    "start": "vite",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@chenfengyuan/vue-countdown": "2",
     "@element-plus/icons-vue": "^1.0.0",
     "axios": "^0.26.0",
     "element-plus": "^2.0.4",
     "pinia": "^2.0.11",
-    "vue": "^3.2.31",
+    "vue": "3",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
@@ -27,6 +29,7 @@
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
     "@vue/tsconfig": "^0.1.3",
+    "cli-plugin-test": "^1.0.0",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "jsdom": "^19.0.0",
@@ -35,6 +38,7 @@
     "unplugin-icons": "^0.13.2",
     "vite": "^2.8.4",
     "vitest": "^0.5.0",
+    "vue-cli-plugin-test": "~1.0.2",
     "vue-tsc": "^0.31.4"
   }
 }
