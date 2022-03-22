@@ -1,28 +1,41 @@
 <template>
-  <el-container>
-     
-      <el-menu
-        default-active="1"
-        class="el-menu-vertical-demo"
-        :collapse="isCollapse"
-        @open="handleOpen"
-        @close="handleClose"
-      >
-        <el-menu-item index="1">
-        <el-icon>
-          <i class='fa fa-flag'></i>
-        </el-icon>
-          <span>Pontuar Jogadores</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-        <el-icon><i class="fa fa-question-circle"></i></el-icon>
-          <span>Montar times</span>
-        </el-menu-item>
-      </el-menu>
-    <el-main>
-      <RouterView />
-    </el-main>
-  </el-container>
+  <div class="common-layout">
+    <el-container>
+      <el-aside>
+        <el-menu
+          default-active="1"
+          class="el-menu-vertical-demo"
+          :collapse="isCollapse"
+          @open="handleOpen"
+          @close="handleClose"
+          :vue-router="true"
+        >
+          <el-menu-item index="1" @click="redirect('jogadores')">
+            <el-icon>
+              <i class='fa fa-flag'></i>
+            </el-icon>
+              <span>Pontuar</span>
+          </el-menu-item>
+          <!-- //TODO: Colocar ícons -->
+          <el-menu-item index="2" @click="redirect('teams')">
+            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <span>Montar times</span>
+          </el-menu-item>
+          <el-menu-item index="3" @click="redirect('listPlayers')">
+            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <span>Jogadores</span>
+          </el-menu-item>
+          <el-menu-item index="4"  @click="redirect('addPlayer')">
+            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <span>Adicionar Jogadores</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+      <el-main>
+        <RouterView />
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,10 +47,19 @@ export default {
   store,
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+    }
+  },
+  computed:{
+    timeName(){
+      return this.$route.params.timeName
     }
   },
   methods: {
+    redirect(route: string){
+      console.log(route)
+      this.$router.push({name: route, params: this.$route.params});
+    }
   },
   mounted() {
     store().$subscribe(handleStorageMutation, {deep: true})
@@ -54,97 +76,4 @@ body{
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>

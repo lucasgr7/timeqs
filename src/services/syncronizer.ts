@@ -3,7 +3,7 @@ import { toJson } from "./storage";
 
 export const syncDatabase = (persistBase: any, local: any, hash: string, timeName: string): any => {
   persistBase[timeName].jogadores = syncJogadores(persistBase[timeName].jogadores, local[timeName].jogadores, hash)
-  return toJson(persistBase)
+  return persistBase
 }
 
 export const syncJogadores = (persistJogadores: JOGADOR[], localJogadores: JOGADOR[], hash: string): JOGADOR[] => {
