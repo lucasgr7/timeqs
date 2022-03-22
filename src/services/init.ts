@@ -18,7 +18,7 @@ export default (timeName: string, db: any) => {
         nome: 'Rafa',
         foto: 'https://i.ibb.co/dGFXkvK/pp.jpg',
       },
-    ]
+    ]//TODO: Add Jogadores do Franca Volei
   }
   return database
 }

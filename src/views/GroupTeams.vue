@@ -1,5 +1,5 @@
 <template>
-  
+  //TODO: Criar agrupamento de jogadores que monte times equilibrados
 </template>
 
 <script>
