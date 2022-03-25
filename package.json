@@ -12,12 +12,12 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
-    "@chenfengyuan/vue-countdown": "2",
+    "@chenfengyuan/vue-countdown": "^2.0.0",
     "@element-plus/icons-vue": "^1.0.0",
     "axios": "^0.26.0",
     "element-plus": "^2.0.4",
     "pinia": "^2.0.11",
-    "vue": "3",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
