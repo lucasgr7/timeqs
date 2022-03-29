@@ -21,18 +21,15 @@ export const store = defineStore({
     jogadores: [],
     hash: '',
     timeName: '',
+    isAvailablePontuation: true,
   }),
   getters: {
     getEditPlayers: (state) => {
       const date = new Date();
-      return state.jogadores.filter((x: any) => {
-        if(!x.edittableDate) return x;
-        const edittableDate = new Date(x.edittableDate);
-        if(date > edittableDate){
-          return x
-        }
-      })
-      //TODO: Filtrar fora usuários que não tenha passado 7 dias após storage aplicação
+      return state.jogadores.sort(()=> Math.random() - 0.5)
+    },
+    getAvailablePontuation: (state: any) => {
+      return state.isAvailablePontuation
     }
   },
   actions: {
@@ -97,6 +94,9 @@ export const store = defineStore({
         }
         state.localDb[this.timeName].jogadores[playerIndex].scores = playerScores
       })
+    },
+    userFinishedPontuatingAll(){
+      this.isAvailablePontuation = false
     },
     async sync() {
       const timeName = this.timeName ?? ''

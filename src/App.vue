@@ -4,7 +4,6 @@
       <el-aside>
         <el-menu
           default-active="1"
-          class="el-menu-vertical-demo"
           :collapse="isCollapse"
           @open="handleOpen"
           @close="handleClose"
@@ -16,17 +15,16 @@
             </el-icon>
               <span>Pontuar</span>
           </el-menu-item>
-          <!-- //TODO: Colocar ícons -->
           <el-menu-item index="2" @click="redirect('teams')">
-            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <el-icon><i class="fa-regular fa-circle-play"></i></el-icon>
             <span>Montar times</span>
           </el-menu-item>
           <el-menu-item index="3" @click="redirect('listPlayers')">
-            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <el-icon><i class="fa-regular fa-user"></i></el-icon>
             <span>Jogadores</span>
           </el-menu-item>
           <el-menu-item index="4"  @click="redirect('addPlayer')">
-            <el-icon><i class="fa fa-question-circle"></i></el-icon>
+            <el-icon><i class="fa-regular fa-square-plus"></i></el-icon>
             <span>Adicionar Jogadores</span>
           </el-menu-item>
         </el-menu>
@@ -47,7 +45,7 @@ export default {
   store,
   data() {
     return {
-      isCollapse: false,
+      isCollapse: true,
     }
   },
   computed:{
@@ -75,5 +73,12 @@ body{
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
-
+@media screen and (max-width: 400px){
+  .el-main {
+      --el-main-padding: 0px;
+  }
+  .el-aside {
+    --el-aside-width: unset;
+  }
+}
 </style>

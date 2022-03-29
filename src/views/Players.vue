@@ -1,110 +1,66 @@
 <template>
-  <el-row justify="center">
+  <el-row  v-if="getAvailablePontuation" justify="center">
     <transition-group tag="el-card" name="fade">
-      <el-card
-        class="box-card"
-        v-for="(player, id) of getEditPlayers"
-        :key="id"
-        v-show="idxVisible == id"
-      >
-        <el-row>
-          <el-col :span="24">
-            <h3>{{ player.nome }}</h3>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-image :src="player.foto" :fit="contain">
-              <template #error>
-                <div class="image-slot">Sem foto</div>
-                <!-- //TODO: Criar quando usuário não tiver foto -->
-              </template>
-            </el-image>
-          </el-col>
-        </el-row>
-        <el-slider
-          :size="large"
-          :min="1"
-          :max="10"
-          v-model="points"
-        ></el-slider>
-        <el-divider></el-divider>
-        <el-row>
-          <el-col :span="8">
-            <el-button
-              size="large"
-              :icon="Share"
-              @click="handlePularClick"
-              type="danger"
-            >
-              <i class="fa fa-circle-xmark"></i>
-            </el-button>
-          </el-col>
-          <el-col :offset="12" :span="4">
-            <el-button
-              @click="(event) => handleSetUserScore(player, id)"
-              size="large"
-              type="success"
-            >
-              <i class="fa fa-circle-check"></i>
-            </el-button>
-          </el-col>
-        </el-row>
-      </el-card>
-      <div v-if="isFinished">
-        <el-row>
-          <el-col :span="24">
-            <h3>
-              Parabéns todos os jogadores foram pontuados!
-              <el-icon>
-                ✔
-              </el-icon>
-            </h3>
-          </el-col>
-        </el-row>
-        <hr/>
-        <el-row>
-          <el-col>
-            <h4>
-              <vue-countdown :time="timeRemaining" v-slot="{days, hours, minutes, seconds}">
-                Poderá repontuar novamente em: <b>{{days}} dias, {{ hours }} horas, {{ minutes }} minutos, {{ seconds }} segundos.</b>
-              </vue-countdown>
-            </h4>
-          </el-col>
-        </el-row>
+      <div class="box-card" v-for="(player, id) of getEditPlayers" :key="id" v-show="idxVisible == id">
+        <CardPlayer :player="player" :idx="id" 
+        @confirm="handleSetUserScore"
+        @skip="handlePularClick"></CardPlayer>
       </div>
     </transition-group>
+  </el-row>
+  <el-row justify="center">
+    <div class="label-finished" v-if="!getAvailablePontuation">
+      <el-row>
+        <el-col :span="24">
+          <h1>
+            <el-icon>
+              ✔
+            </el-icon>
+            Parabéns todos os jogadores foram pontuados!
+          </h1>
+        </el-col>
+      </el-row>
+      <hr/>
+      <el-row>
+        <el-col>
+          <h4>
+            <vue-countdown :time="timeRemaining" v-slot="{days, hours, minutes, seconds}">
+              Poderá repontuar novamente em: <b>{{days}} dias, {{ hours }} horas, {{ minutes }} minutos, {{ seconds }} segundos.</b>
+            </vue-countdown>
+          </h4>
+        </el-col>
+      </el-row>
+    </div>
   </el-row>
 </template>
 
 <script lang="ts">
 import {  mapActions, mapState } from 'pinia'
 import { store } from '@/stores'
+import CardPlayer from '@/components/CardPlayer.vue'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 export default {
     name: 'players-view',
     store,
-    components: {VueCountdown},
+    components: {VueCountdown, CardPlayer},
     data() {
         return { 
-            points: 0,
             idxVisible: 0,
-            timeRemaining: 10,
-            isFinished: false,
+            timeRemaining: 0,
         }
     },
     computed: {
-      ...mapState(store, ['getEditPlayers'])
+      ...mapState(store, ['getEditPlayers', 'getAvailablePontuation'])
     },
     methods: {
-      ...mapActions(store, ['init', 'setUserScore', 'sync']),
+      ...mapActions(store, ['init', 'setUserScore', 'sync', 'userFinishedPontuatingAll']),
       handlePularClick: function(){
         this.points = 0
         this.idxVisible++
-        this.isFinished = this.idxVisible === this.getEditPlayers.length
+        if(this.idxVisible === this.getEditPlayers.length) this.userFinishedPontuatingAll()
       },
-      handleSetUserScore: function(player: any, idx: number){
-        this.setUserScore(idx, this.points)
+      handleSetUserScore: function({idx, points}: any){
+        this.setUserScore(idx, points)
         this.sync()
         this.handlePularClick()
       }
@@ -119,7 +75,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.label-finished{
+  padding: 13px;
+  padding-top: 50%;
+}
 .image-slot {
   width: 230px;
   height: 230px;
