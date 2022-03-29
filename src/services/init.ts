@@ -71,10 +71,6 @@ export default (timeName: string, db: any) => {
         foto: 'https://i.ibb.co/3vgCNsV/161278141-140516661740076-107885017285901098-n.jpg',
       },
       {
-        nome: 'Leandro Maia',
-        foto: 'https://i.ibb.co/4TvqPGQ/251801673-991064298176966-7350575651861633930-n.jpg',
-      },
-      {
         nome: 'Caio (vida) Melo',
         foto: '',
       },

@@ -2,9 +2,9 @@
 <el-card class="box-card">
     <el-row>
         <el-col :span="24">
-            <el-image :src="player.foto" :fit="contain">
+            <el-image :src="player.foto" fit="fill">
                 <template #error>
-                    <el-empty :image-size="200" description="Infelizmente não temos a foto dessa pessoa"  />
+                    <el-empty :image-size="148" fit="fill" description="Infelizmente não temos a foto dessa pessoa"  />
                 </template>
             </el-image>
             <el-row class="picture-subtitle">
@@ -83,6 +83,7 @@ h2{
 @media screen and (max-width: 600px){
   .box-card{
     height: 100%;
+    width: 100%;
   }
   .el-card__body{
     padding: 2px;

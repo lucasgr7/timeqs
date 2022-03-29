@@ -15,18 +15,18 @@
             </el-icon>
               <span>Pontuar</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="redirect('teams')">
+          <!-- <el-menu-item index="2" @click="redirect('teams')">
             <el-icon><i class="fa-regular fa-circle-play"></i></el-icon>
             <span>Montar times</span>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="3" @click="redirect('listPlayers')">
             <el-icon><i class="fa-regular fa-user"></i></el-icon>
             <span>Jogadores</span>
           </el-menu-item>
-          <el-menu-item index="4"  @click="redirect('addPlayer')">
+          <!-- <el-menu-item index="4"  @click="redirect('addPlayer')">
             <el-icon><i class="fa-regular fa-square-plus"></i></el-icon>
             <span>Adicionar Jogadores</span>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-menu>
       </el-aside>
       <el-main>
@@ -66,7 +66,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
 @import '@/assets/base.css';
 
 body{
@@ -76,9 +76,19 @@ body{
 @media screen and (max-width: 400px){
   .el-main {
       --el-main-padding: 0px;
+    height: 100%;
   }
   .el-aside {
     --el-aside-width: unset;
+    width: 50px;
+    height: 100%;
+  }
+  .el-menu{
+    width: 50px;
+
+    .el-menu-item{
+      margin-left: -9px;
+    }
   }
 }
 </style>
